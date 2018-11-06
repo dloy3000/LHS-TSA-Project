@@ -8,6 +8,10 @@ public class DriveTest : MonoBehaviour
 
     public float walkSpeed;
 
+    public float handling;
+
+    public float dragF;
+
     private Vector3 movementVector;
 
     private float horizontalF, verticalF;
@@ -25,5 +29,7 @@ public class DriveTest : MonoBehaviour
         verticalF = Input.GetAxisRaw("Vertical") * walkSpeed;
 
         car.AddForce(new Vector2(horizontalF * walkSpeed, verticalF * walkSpeed));
+
+        car.AddTorque(handling * horizontalF);
     }
 }

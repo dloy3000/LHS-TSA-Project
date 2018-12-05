@@ -14,27 +14,26 @@ public class DriveTest : MonoBehaviour
 
     private float horizontalF, verticalF;
 
-    public Animator carAnimator;
-
     // Use this for initialization
     void Start()
     {
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         horizontalF = Input.GetAxisRaw("Horizontal") * acceleration;
 
         verticalF = Input.GetAxisRaw("Vertical") * acceleration;
 
-        car.AddForce(car.transform.up * verticalF * acceleration);
+        car.AddForce((car.transform.up * verticalF * acceleration));
 
         currentV = car.velocity;
 
         if (verticalF != 0)
         {
             car.AddTorque(-1 * handling * horizontalF);
+            //car.transform.Rotate(car.transform.right * horizontalF * handling);
         }
 
         ApplyDrag();
@@ -43,11 +42,16 @@ public class DriveTest : MonoBehaviour
 
     void ApplyDrag()
     {
-        if (verticalF == 0)
-        {
-            car.AddForce(-1 * ((car.velocity * car.mass) * (frictionC)));
-            //car.AddForce((-1 * car.mass * car.velocity) / frictionC);
-        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+            //car.AddForce(-1 * ((car.velocity * car.mass) * (10 * frictionC)));
+            //Debug.Log("You pressed space.");
+        //}
+
+        //else
+        car.AddForce(-1 * ((car.velocity * car.mass) * (frictionC)));
+
+        car.AddRelativeForce(car.transform.up * car.velocity);
     }
     void MaxSpeed()
     {

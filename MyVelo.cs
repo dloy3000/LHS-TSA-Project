@@ -22,8 +22,8 @@ public class MyVelo : MonoBehaviour
 
         float refinedVelo = Mathf.Sqrt((currentVelo.x * currentVelo.x) + (currentVelo.y * currentVelo.y));
 
-        refinedVelo = Mathf.Round(refinedVelo);
+        refinedVelo = Mathf.Round(refinedVelo * 2.23694f);
 
-        veloText.text = refinedVelo.ToString();
+        veloText.text = refinedVelo.ToString() + "mph";
     }
 }

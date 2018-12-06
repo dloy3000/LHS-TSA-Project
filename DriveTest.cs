@@ -14,6 +14,8 @@ public class DriveTest : MonoBehaviour
 
     private float horizontalF, verticalF;
 
+    private bool passMax;
+
     // Use this for initialization
     void Start()
     {
@@ -36,67 +38,55 @@ public class DriveTest : MonoBehaviour
             //car.transform.Rotate(car.transform.right * horizontalF * handling);
         }
 
+        MaxSpeed();
         ApplyDrag();
-        //MaxSpeed();
     }
 
     void ApplyDrag()
     {
         //if (Input.GetKey(KeyCode.Space))
         //{
-            //car.AddForce(-1 * ((car.velocity * car.mass) * (10 * frictionC)));
-            //Debug.Log("You pressed space.");
+        //car.AddForce(-1 * ((car.velocity.normalized * car.mass) * (10 * frictionC)));
+        //Debug.Log("You pressed space.");
         //}
 
-        //else
-        car.AddForce(-1 * ((car.velocity * car.mass) * (frictionC)));
 
-        car.AddRelativeForce(car.transform.up * car.velocity);
+        ////
+        if (passMax || verticalF == 0)
+            car.AddForce(-1 * ((car.velocity * car.mass)));
+
+        else if (passMax == false)
+        {
+            car.AddForce(-1 * (car.velocity.normalized * car.mass * (car.velocity.sqrMagnitude / (1000 * frictionC))));
+            car.AddForce(-1 * (car.transform.right * car.velocity.magnitude));
+        }
+        ////
+
+
+        //car.AddForce(-1 * ((car.velocity.normalized * car.mass * frictionC)));
+
+        //car.AddForce((-1 * (((car.velocity.x + car.velocity.y) * car.transform.right * car.mass) * (10 * frictionC))));
     }
+
     void MaxSpeed()
     {
-        bool veloX = false;
-        bool veloY = false;
+        if (car.velocity.x > maxVeloF)
+            car.velocity = new Vector2(maxVeloF, car.velocity.y);
 
-        if (currentV.x > maxVeloF)
-        {
-            veloX = true;
-        }
+        if (car.velocity.y > maxVeloF)
+            car.velocity = new Vector2(car.velocity.x, maxVeloF);
 
-        if (currentV.y > maxVeloF)
-        {
-            veloY = true;
-        }
+        if (car.velocity.x < (-1 * maxVeloF))
+            car.velocity = new Vector2(-1 * maxVeloF, car.velocity.y);
 
-        if (veloX == true && veloY == true)
-        {
-            if (currentV.x < 0)
-                car.velocity = new Vector2(maxVeloF * -1, maxVeloF);
+        if (car.velocity.y < (-1 * maxVeloF))
+            car.velocity = new Vector2(car.velocity.x, -1 * maxVeloF);
 
-            if (currentV.y < 0)
-                car.velocity = new Vector2(maxVeloF, maxVeloF * -1);
+        if (car.velocity.magnitude > maxVeloF)
+            passMax = true;
 
-            else
-                car.velocity = new Vector2(maxVeloF, maxVeloF);
-        }
-
-        else if (veloX == true && veloY == false)
-        {
-            if (currentV.x < 0)
-                car.velocity = new Vector2(maxVeloF * -1, car.velocity.y);
-
-            else
-                car.velocity = new Vector2(maxVeloF, car.velocity.y);
-        }
-
-        else if (veloX == false && veloY == true)
-        {
-            if (currentV.x < 0)
-                car.velocity = new Vector2(car.velocity.x, maxVeloF * -1);
-
-            else
-                car.velocity = new Vector2(car.velocity.x, maxVeloF);
-        }
+        else
+            passMax = false;
     }
 
     public Vector2 returnVelo()

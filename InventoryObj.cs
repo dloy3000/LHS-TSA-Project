@@ -4,17 +4,39 @@ using UnityEngine;
 
 public class InventoryObj : MonoBehaviour
 {
-    public string objName;
-    public int objID;
+    private string objName;
+    private int objID;
+    private string description;
 
+    public InventoryObj(string name, string descript, int ID)
+    {
+        objName = name;
+        description = descript;
+        objID = ID;
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public string ReturnName()
+    {
+        return objName;
+    }
+
+    public int ReturnID()
+    {
+        return objID;
+    }
+
+    public string ReturnDescription()
+    {
+        return description;
+    }
+
+    void changeID(int newID)
+    {
+        objID = newID;
+    }
+
+    public static InventoryObj getObj(int objID)
+    {
+        return InventoryRegistry.Registry(objID);
+    }
 }

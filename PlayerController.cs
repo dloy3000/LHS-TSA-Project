@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
         if (targetObj.tag == "Interactable")
         {
-          interactButton.setActive(true);
+          interactButton.SetActive(true);
 
           if (Input.GetKeyCode(KeyCode.Space))
           {
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
         else
         {
-          interactButton.setActive(false)
+          interactButton.SetActive(false)
         }
     }
 }

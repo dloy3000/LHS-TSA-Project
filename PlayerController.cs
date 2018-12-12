@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,21 +8,18 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D player;
 
     public float walkSpeed, interactDist;
-    
+
     public Button interactButton;
 
     public Animator anim;
 
     private bool isWalking;
 
-    private bool walkingUp, walkingDown, walkingRight, walkingLeft; 
+    private bool walkingUp, walkingDown, walkingRight, walkingLeft;
 
     private float horizontalF, verticalF;
 
     private Vector2 playerDirection, tempDirection;
-
-    //testLine
-    public LineRenderer laser;
 
     // Use this for initialization
     void Start()
@@ -39,8 +36,6 @@ public class PlayerController : MonoBehaviour
 
         player.velocity = new Vector2(horizontalF * walkSpeed, verticalF * walkSpeed);
 
-        Animate(verticalF, horizontalF);
-
         playerDirection = tempDirection;
 
         tempDirection = new Vector2(horizontalF, verticalF);
@@ -49,6 +44,8 @@ public class PlayerController : MonoBehaviour
         {
             tempDirection = playerDirection;
         }
+
+        Animate(verticalF, horizontalF);
 
         Interact();
     }
@@ -100,25 +97,17 @@ public class PlayerController : MonoBehaviour
 
     void Interact()
     {
-        GameObject targetObj;
+        RaycastHit2D hit = Physics2D.Raycast(player.transform.position, playerDirection, interactDist);
 
-        RaycastHit2D playerIntRange = Physics2D.Raycast(player.transform.position, playerDirection, interactDist);
-
-        targetObj = playerIntRange.transform.gameobject;
-
-        if (targetObj.tag == "Interactable")
+        if (hit.collider != null)
         {
-          interactButton.SetActive(true);
-
-          if (Input.GetKeyCode(KeyCode.Space))
-          {
-            InventoryObj.Interact(targetObj);
-          }
+            if (hit.collider.tag == "Interactable")
+                interactButton.gameObject.SetActive(true);
         }
 
         else
         {
-          interactButton.SetActive(false)
+            interactButton.gameObject.SetActive(false);
         }
     }
 }

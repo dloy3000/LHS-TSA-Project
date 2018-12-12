@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -101,31 +101,24 @@ public class PlayerController : MonoBehaviour
     void Interact()
     {
         GameObject targetObj;
-        GameObject hit;
 
         RaycastHit2D playerIntRange = Physics2D.Raycast(player.transform.position, playerDirection, interactDist);
 
-        hit = playerIntRange.collider.gameObject;
-        laser.SetPosition(0, player.transform.position);
-        laser.SetPosition(1, playerIntRange.point);
+        targetObj = playerIntRange.transform.gameobject;
 
-        Instantiate(laser, player.transform.position, player.transform.rotation);
-
-        if (hit.tag == "Interactable")
+        if (targetObj.tag == "Interactable")
         {
-            interactButton.gameObject.SetActive(true);
+          interactButton.setActive(true);
+
+          if (Input.GetKeyCode(KeyCode.Space))
+          {
+            InventoryObj.Interact(targetObj);
+          }
         }
 
         else
         {
-            interactButton.gameObject.SetActive(false);
-        }
-
-        if (Input.GetKey(KeyCode.Z))
-        {
-            targetObj = playerIntRange.collider.gameObject;
-
-            //targetObj.GetComponent<>
+          interactButton.setActive(false)
         }
     }
 }

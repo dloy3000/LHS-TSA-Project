@@ -23,7 +23,7 @@ public class InventoryRegistry : MonoBehaviour
 
         else if (objID == 1) //If there is a rarity system, do it so that each nth number is x rarity
         {
-            objName = "Aluminum Capacitor";
+            objName = "Ceramic Capacitor";
             objDescript = "A small capacitor that stores pulses of energy. Has low and somewhat unstable capacitance, but are efficient enough to have a myriad of uses.";
             invObject = new InventoryObj(objName, objDescript, objID);
         }

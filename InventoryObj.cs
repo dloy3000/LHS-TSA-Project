@@ -30,9 +30,14 @@ public class InventoryObj : MonoBehaviour
         return description;
     }
 
-    void changeID(int newID)
+    public void changeID(int newID)
     {
         objID = newID;
+
+        InventoryObj obj = getObj(newID);
+
+        objName = obj.ReturnName();
+        description = obj.ReturnDescription();
     }
 
     public static InventoryObj getObj(int objID)

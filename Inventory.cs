@@ -5,24 +5,24 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    private List<InventoryObj> inventory;
+    //private List<InventoryObj> inventory;
+
+    private InventoryObj[] inventory = new InventoryObj[99999];
 
     public Canvas menu;
 
-	// Use this for initialization
-	void Start ()
+    public void addObj(InventoryObj obj)
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+        //InventoryObj obj = InventoryObj.getObj(objID);
+        //Debug.Log("The name of this item is " + obj.ReturnName());
+        //inventory.Add(obj);
 
-    void addObj(int objID)
+        inventory[0] = obj;
+        Debug.Log(inventory[0]);
+    }
+
+    public static Inventory returnInventory(Inventory myInventory)
     {
-        inventory.Add(InventoryObj.getObj(objID));
+        return myInventory;
     }
 }

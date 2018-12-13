@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
 
     public Animator anim;
 
+    private Inventory playerInventory;
+
+    private Interact interaction;
+
     private bool isWalking;
 
     private bool walkingUp, walkingDown, walkingRight, walkingLeft;
@@ -25,6 +29,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         isWalking = false;
+        interaction = GetComponent<Interact>();
+        playerInventory = GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -36,8 +42,6 @@ public class PlayerController : MonoBehaviour
 
         player.velocity = new Vector2(horizontalF * walkSpeed, verticalF * walkSpeed);
 
-        playerDirection = tempDirection;
-
         tempDirection = new Vector2(horizontalF, verticalF);
 
         if (tempDirection == new Vector2(0, 0))
@@ -45,9 +49,11 @@ public class PlayerController : MonoBehaviour
             tempDirection = playerDirection;
         }
 
+        playerDirection = tempDirection;
+
         Animate(verticalF, horizontalF);
 
-        Interact();
+        InteractPlayer();
     }
 
     void Animate(float verticalF, float horizontalF)
@@ -95,14 +101,27 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isWalking", isWalking);
     }
 
-    void Interact()
+    void InteractPlayer()
     {
         RaycastHit2D hit = Physics2D.Raycast(player.transform.position, playerDirection, interactDist);
 
         if (hit.collider != null)
         {
-            if (hit.collider.tag == "Interactable")
+            if (hit.collider.transform.gameObject.GetComponent<InventoryObj>())
+            {
                 interactButton.gameObject.SetActive(true);
+            }
+
+            InventoryObj obj = hit.collider.transform.gameObject.GetComponent<InventoryObj>();
+            int objID = obj.ReturnID();
+
+            Debug.Log("The ID of the targeted object is " + objID);
+
+            if (Input.GetKey(KeyCode.Z) && interactButton.enabled == true)
+            {
+                playerInventory.addObj(obj);
+                hit.collider.transform.gameObject.SetActive(false);
+            }
         }
 
         else

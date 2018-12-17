@@ -28,6 +28,13 @@ public class InventoryRegistry : MonoBehaviour
             invObject = new InventoryObj(objName, objDescript, objID);
         }
 
+        else if (objID == 2) //If there is a rarity system, do it so that each nth number is x rarity
+        {
+            objName = "Key Card: Clearance Level C";
+            objDescript = "A security key card with the lowest level of clearance. Grants access to warehouses and rooms available to low-ranking factory workers.";
+            invObject = new InventoryObj(objName, objDescript, objID);
+        }
+
         return invObject;
     }
 }

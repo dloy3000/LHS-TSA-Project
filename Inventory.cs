@@ -5,23 +5,37 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    //private List<InventoryObj> inventory;
+    private List<InventoryObj> inventory = new List<InventoryObj>();
 
-    private InventoryObj[] inventory = new InventoryObj[99999];
+    //private InventoryObj[] inventory = new InventoryObj[99999];
 
-    public Canvas menu;
+    public Text menu; //expiremental
 
     public void addObj(InventoryObj obj)
     {
-        //InventoryObj obj = InventoryObj.getObj(objID);
         //Debug.Log("The name of this item is " + obj.ReturnName());
-        //inventory.Add(obj);
 
-        inventory[0] = obj;
-        Debug.Log(inventory[0]);
+        Debug.Log("Targeting " + obj.ReturnName());
+
+        inventory.Add(obj);
+        Debug.Log(obj.ReturnName() + " added to inventory.");
     }
 
-    public static Inventory returnInventory(Inventory myInventory)
+    public void removeObj(InventoryObj obj)
+    {
+        inventory.Remove(obj);
+    }
+
+    public bool doesContain(InventoryObj obj)
+    {
+        if (inventory.Contains(obj))
+            return true;
+
+        else
+            return false;
+    }
+
+    public Inventory returnInventory(Inventory myInventory)
     {
         return myInventory;
     }

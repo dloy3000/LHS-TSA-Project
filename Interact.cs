@@ -5,12 +5,35 @@ using UnityEngine.UI;
 
 public class Interact : MonoBehaviour
 {
-    public static int findObject(InventoryObj targetObj) //returns the id of the target object
+    //Determine whether target object is static or inv
+    public static void getTarget(GameObject obj, Inventory playerInventory)
     {
-        Debug.Log("-------------");
-        Debug.Log(targetObj.ReturnName());
-        Debug.Log(targetObj.ReturnDescription());
-        Debug.Log(targetObj.ReturnID());
-        return targetObj.ReturnID();
+        if (obj.GetComponent<InventoryObj>())
+        {
+            playerInventory.addObj(getInventoryObject(obj));
+
+            obj.SetActive(false);
+        }
+
+        else if (obj.GetComponent<StaticObj>())
+        {
+            StaticObj staticObj = getStaticObject(obj);
+
+            staticObj.ActivateStatic(playerInventory);
+        }
+    }
+    
+    public static InventoryObj getInventoryObject(GameObject obj)
+    {
+        InventoryObj objInv = obj.GetComponent<InventoryObj>();
+
+        return objInv;
+    }
+
+    public static StaticObj getStaticObject(GameObject obj)
+    {
+        StaticObj objStatic = obj.GetComponent<StaticObj>();
+
+        return objStatic;
     }
 }

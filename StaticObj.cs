@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaticObj : MonoBehaviour {
+public class StaticObj : MonoBehaviour
+{
+    public string objName;
+    //private int staticID;
+    public GameObject target;
+    public int effectType;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void ActivateStatic(Inventory playerInventory)
+    {
+        if (effectType == 0) //Opening, disabling of doors
+        {
+            OpenDoor door = GetComponent<OpenDoor>();
+
+            door.openDoor(playerInventory);
+        }
+
+        //if (effectType == 1) --activate some object
+    }
 }

@@ -23,16 +23,24 @@ public class Inventory : MonoBehaviour
 
     public void removeObj(InventoryObj obj)
     {
-        inventory.Remove(obj);
+        for (int i = 0; i < inventory.Count; i++)
+            if (inventory[i].ReturnID() == obj.ReturnID())
+            {
+                inventory.Remove(inventory[i]);
+
+                break;
+            }
     }
 
     public bool doesContain(InventoryObj obj)
     {
-        if (inventory.Contains(obj))
-            return true;
+        bool result = false;
 
-        else
-            return false;
+        for (int i = 0; i < inventory.Count; i++)
+            if (inventory[i].ReturnID() == obj.ReturnID())
+                result = true;
+
+        return result;
     }
 
     public Inventory returnInventory(Inventory myInventory)

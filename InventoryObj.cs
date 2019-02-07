@@ -7,12 +7,14 @@ public class InventoryObj : MonoBehaviour
     private string objName;
     private int objID;
     private string description;
+    private Texture2D objImage;
 
-    public InventoryObj(string name, string descript, int ID)
+    public InventoryObj(string name, string descript, int ID, Texture2D image)
     {
         objName = name;
         description = descript;
         objID = ID;
+        objImage = image;
     }
 
     public string ReturnName()
@@ -28,6 +30,11 @@ public class InventoryObj : MonoBehaviour
     public string ReturnDescription()
     {
         return description;
+    }
+
+    public Texture2D returnImage()
+    {
+        return objImage;
     }
 
     public void changeID(int newID)

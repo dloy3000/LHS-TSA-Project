@@ -47,4 +47,9 @@ public class Inventory : MonoBehaviour
     {
         return myInventory;
     }
+
+    public InventoryObj[] returnComponents()
+    {
+        return inventory.ToArray();
+    }
 }
